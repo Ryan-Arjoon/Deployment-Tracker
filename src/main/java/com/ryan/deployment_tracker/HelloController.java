@@ -1,4 +1,4 @@
-package org.ryan.deployment_tracker;
+package com.ryan.deployment_tracker;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
