@@ -1,12 +1,23 @@
 package com.ryan.deployment_tracker;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class Deployment{
 
     private Long id;
+
+    @NotBlank
     private String applicationName;
+
+    @NotBlank
     private String enviornment;
+
+    @NotBlank
     private String version;
+
+    @NotBlank
     private String status;
+    
     //Initalize object
     public Deployment(Long id, String applicationName, String enviornment, String version, String status){
 
@@ -15,6 +26,9 @@ public class Deployment{
         this.enviornment = enviornment;
         this.version = version;
         this.status = status;
+    }
+
+    public Deployment(){
     }
 
     //Getters
@@ -38,4 +52,24 @@ public class Deployment{
         return status;
     }
 
+    //Setters
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    public void setApplicationName(String applicationName){
+        this.applicationName = applicationName;
+    }
+
+    public void setEnviornment(String enviornment){
+        this.enviornment = enviornment;
+    }
+
+    public void setVersion(String version){
+        this.version = version;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
+    }
 }
