@@ -2,21 +2,23 @@ package com.ryan.deployment_tracker;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class DeploymentService{
     
-    private final List<Deployment> deployments = new ArrayList<>();
+    private final DeploymentRepository deploymentRepository;
+
+    public DeploymentService(DeploymentRepository deploymentRepository){
+        this.deploymentRepository = deploymentRepository;
+    }
 
     public List<Deployment> getAllDeployments(){
-        return deployments;
+        return deploymentRepository.findAll();
     }
 
     public Deployment createDeployment(Deployment deployment){
-        deployments.add(deployment);
-        return deployment;
+        return deploymentRepository.save(deployment);
     }
 }
