@@ -1,9 +1,16 @@
 package com.ryan.deployment_tracker;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.persistance.Entity;
+import jakarta.persistance.GeneratedValue;
+import jakarta.persistance.GenerationType;
+import jakarta.persistance.Id;
 
+@Entity
 public class Deployment{
 
+    @Id
+    @GeneratedValue(startegy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
