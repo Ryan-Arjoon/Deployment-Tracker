@@ -10,14 +10,12 @@ import org.springframework.stereotype.Service;
 public class DeploymentService{
     
     private final List<Deployment> deployments = new ArrayList<>();
-    private final AtomicLong nextId = new AtomicLong(1);
 
     public List<Deployment> getAllDeployments(){
         return deployments;
     }
 
     public Deployment createDeployment(Deployment deployment){
-        deployment.setId(nextId.getAndIncrement());
         deployments.add(deployment);
         return deployment;
     }
