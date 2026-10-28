@@ -1,7 +1,7 @@
 package com.ryan.deployment_tracker;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,5 +20,9 @@ public class DeploymentService{
 
     public Deployment createDeployment(Deployment deployment){
         return deploymentRepository.save(deployment);
+    }
+
+    public Optional<Deployment> getDeploymentById(Long id){
+        return deploymentRepository.findById(id);
     }
 }
