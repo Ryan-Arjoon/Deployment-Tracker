@@ -25,4 +25,14 @@ public class DeploymentService{
     public Optional<Deployment> getDeploymentById(Long id){
         return deploymentRepository.findById(id);
     }
+
+    public boolean deleteDeployment(Long id){
+
+        if (!deploymentRepository.existsById(id)){
+            return false;
+        }
+
+        deploymentRepository.deleteById(id);
+        return true;
+    }
 }
