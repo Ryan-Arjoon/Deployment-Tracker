@@ -35,4 +35,16 @@ public class DeploymentService{
         deploymentRepository.deleteById(id);
         return true;
     }
+
+    public Optional<Deployment> updateDeployment(Long id, Deployment updatedDeployment){
+        
+        Optional<Deployment> existingDeployment = deploymentRepository.findById(id);
+
+        if (existingDeployment.isEmpty()){
+            return Optional.empty();
+        }
+
+        updatedDeployment.setId(id);
+        return Optional.of(deploymentRepository.save(updatedDeployment));
+    }
 }
