@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,6 +56,18 @@ public class DeploymentController{
 
         if (deleted){
             return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Deployment> updateDeployment(@PathVariable Long id, @Valid @RequestBody Deployment deployment){
+
+        Optional<Deployment> updated = deploymentService.updateDeployment(id, deployment);
+
+        if (updated.isPresent()){
+            return ResponseEntity.ok(updated.get());
         }
 
         return ResponseEntity.notFound().build();
