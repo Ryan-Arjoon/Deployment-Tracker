@@ -15,9 +15,10 @@ pipeline{
             }
         }
 
-        stage("Check Docker"){
+        stage("Build Docker Image"){
             steps{
-                bat 'docker version'
+                bat 'mvnw.cmd package -DskipTests'
+                bat 'docker build -t deployment-tracker:1.0 .'
             }
         }
     }
