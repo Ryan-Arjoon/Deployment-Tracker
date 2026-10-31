@@ -24,13 +24,13 @@ pipeline{
 
         stage("Push Docker Image"){
             steps{
-                withCredentials({
+                withCredentials([
                     usernamePassword(
                         credentialsId: "dockerhub-credentials",
                         usernameVariable: 'DOCKERHUB_USERNAME',
                         passwordVariable: "DOCKERHUB_TOKEN"
                     )
-                }) {
+                ]) {
                     bat '''
                     powershell -NoProfile -NonInteractive -Command "$env:DOCKERHUB_TOKEN | docker login --username $env:DOCKERHUB_USERNAME --password-stdin"
                     docker push ryanarjoon123/deployment-tracker:1.0
