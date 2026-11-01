@@ -23,4 +23,8 @@ kubectl get pods -o wide
 kubectl describe pods <podName>
 kubectl describe deployment deployment-tracker
 kubectl logs <podName>
+
+kubectl app -f k8s/service.yml
+kubectl get services
+kubectl get endpoints deployment-tracker-service
 ```
