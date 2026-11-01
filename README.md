@@ -13,3 +13,18 @@ Clean Up Image
 docker images
 docker rmi deployment-tracker:1.0
 ```
+
+# Kubernetes Commands
+```
+kubectl apply -f k8s/deployment.yml
+kubectl get deployments
+kubectl get pods
+kubectl get pods -o wide
+kubectl describe pods <podName>
+kubectl describe deployment deployment-tracker
+kubectl logs <podName>
+
+kubectl app -f k8s/service.yml
+kubectl get services
+kubectl get endpoints deployment-tracker-service
+```
