@@ -20,5 +20,10 @@ spec:
       containers:
         - name: deployment-tracker
           image: ryanarjoon123/deployment-tracker:1.0
+
+          envForm:
+            - configMapRef:
+              name: deployment-tracker-config
+
           ports:
             - containerPort: 8081
