@@ -32,4 +32,8 @@ kubectl apply -f k8s/configmap.yml
 kubectl get configmaps
 kubectl describe configmap <configmapName>
 kubectl exec <podName> -- printenv
+
+kubectl apply -f .\k8s\secret.yml
+kubectl get secrets
+kubectl exec <podName> -- printenv <secretName>
 ```

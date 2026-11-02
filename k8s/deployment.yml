@@ -24,6 +24,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: deployment-tracker-config
+            - secretRef:
+                name: deployment-tracker-secret
 
           ports:
             - containerPort: 8081
