@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: deployment-tracker
-          image: ryanarjoon123/deployment-tracker:1.0
+          image: ryanarjoon123/deployment-tracker:1.1
 
           envFrom:
             - configMapRef:
