@@ -31,4 +31,5 @@ kubectl get endpoints deployment-tracker-service
 kubectl apply -f k8s/configmap.yml
 kubectl get configmaps
 kubectl describe configmap <configmapName>
+kubectl exec <podName> -- printenv
 ```
