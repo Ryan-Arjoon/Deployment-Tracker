@@ -24,7 +24,16 @@ kubectl describe pods <podName>
 kubectl describe deployment deployment-tracker
 kubectl logs <podName>
 
-kubectl app -f k8s/service.yml
+kubectl apply -f k8s/service.yml
 kubectl get services
 kubectl get endpoints deployment-tracker-service
+
+kubectl apply -f k8s/configmap.yml
+kubectl get configmaps
+kubectl describe configmap <configmapName>
+kubectl exec <podName> -- printenv
+
+kubectl apply -f .\k8s\secret.yml
+kubectl get secrets
+kubectl exec <podName> -- printenv <secretName>
 ```

@@ -19,6 +19,27 @@ spec:
     spec:
       containers:
         - name: deployment-tracker
-          image: ryanarjoon123/deployment-tracker:1.0
+          image: ryanarjoon123/deployment-tracker:1.1
+
+          envFrom:
+            - configMapRef:
+                name: deployment-tracker-config
+            - secretRef:
+                name: deployment-tracker-secret
+
           ports:
             - containerPort: 8081
+
+          livelinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initalDelaySeconds: 30
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initalDelaySeconds: 10
+            peroodSeconds: 5
