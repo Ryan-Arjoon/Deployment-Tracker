@@ -21,7 +21,7 @@ spec:
         - name: deployment-tracker
           image: ryanarjoon123/deployment-tracker:1.0
 
-          envForm:
+          envFrom:
             - configMapRef:
               name: deployment-tracker-config
 
