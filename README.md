@@ -36,4 +36,6 @@ kubectl exec <podName> -- printenv
 kubectl apply -f .\k8s\secret.yml
 kubectl get secrets
 kubectl exec <podName> -- printenv <secretName>
+
+kubectl rollout status deployment/deployment-tracker
 ```

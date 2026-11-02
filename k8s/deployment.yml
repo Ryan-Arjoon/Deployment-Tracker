@@ -30,16 +30,16 @@ spec:
           ports:
             - containerPort: 8081
 
-          livelinessProbe:
+          livenessProbe:
             httpGet:
               path: /actuator/health
               port: 8081
-            initalDelaySeconds: 30
+            initialDelaySeconds: 30
             periodSeconds: 10
 
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: 8081
-            initalDelaySeconds: 10
-            peroodSeconds: 5
+            initialDelaySeconds: 10
+            periodSeconds: 5
