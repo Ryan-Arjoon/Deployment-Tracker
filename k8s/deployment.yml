@@ -5,7 +5,7 @@ metadata:
   name: deployment-tracker
 
 spec:
-  replicas: 3
+  replicas: 1
 
   selector:
     matchLabels:
