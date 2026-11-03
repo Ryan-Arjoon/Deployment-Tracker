@@ -40,10 +40,15 @@ pipeline{
             }
         }
 
-        stage('Check kubernetes access'){
+        stage('Test Kubernetes Access'){
             steps{
-                bat 'kubectl version'
-                bat 'kubectl get nodes'
+                withCredentials([file(
+                    credentialsId: 'kubeconfig-docker-desktop',
+                    variable: 'KUBECONFIG'
+                )]) {
+                    bat 'kubectl get nodes'
+                    bat 'kubectl get pods'
+                }
             }
         }
     }
