@@ -38,4 +38,21 @@ kubectl get secrets
 kubectl exec <podName> -- printenv <secretName>
 
 kubectl rollout status deployment/deployment-tracker
+kubectl rollout history deployment/deployment-tracker
+kubectl rollout undo deployment/deployment-tracker
+
+
+kubectl scale deployment deployment-tracker --replicas=3
+
+kubectl get deployment metrics-server -n kube-system
+kubectl rollout status deployment/metrics-server -n kube-system
+kubectl get pods -n kube-system
+
+kubectl top nodes
+kubectl top pods
+
+kubectl apply -f k8s/hpa.yml
+kubectl get hpa
+kubectl describe hpa <hpaName>
+kubectl get hpa --watch
 ```

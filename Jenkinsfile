@@ -39,5 +39,14 @@ pipeline{
                 }
             }
         }
+
+        stage{
+            stage('Check kubernetes access'){
+                steps{
+                    bat 'kubectl version'
+                    bat 'kubectl get nodes'
+                }
+            }
+        }
     }
 }
