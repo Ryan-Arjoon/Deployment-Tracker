@@ -18,7 +18,7 @@ pipeline{
         stage("Build Docker Image"){
             steps{
                 bat 'mvnw.cmd package -DskipTests'
-                bat 'docker build -t ryanarjoon123/deployment-tracker:1.1 .'
+                bat 'docker build -t ryanarjoon123/deployment-tracker:%BUILD_NUMBER% .'
             }
         }
 
@@ -32,7 +32,7 @@ pipeline{
                     )
                 ]) {
                     bat '''
-                    docker login -u %DOCKER_USER% -p %DCOKER_TOKEN%
+                    docker login -u %DOCKERHUB_USERNAME% -p %DOCKERHUB_TOKEN%
                     docker push ryanarjoon123/deployment-tracker:%BUILD_NUMBER%
                     docker logout
                     '''
