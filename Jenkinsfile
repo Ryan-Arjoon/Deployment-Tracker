@@ -32,8 +32,8 @@ pipeline{
                     )
                 ]) {
                     bat '''
-                    powershell -NoProfile -NonInteractive -Command "$env:DOCKERHUB_TOKEN | docker login --username $env:DOCKERHUB_USERNAME --password-stdin"
-                    docker push ryanarjoon123/deployment-tracker:1.1
+                    docker login -u %DOCKER_USER% -p %DCOKER_TOKEN%
+                    docker push ryanarjoon123/deployment-tracker:%BUILD_NUMBER%
                     docker logout
                     '''
                 }
