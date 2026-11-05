@@ -46,8 +46,13 @@ pipeline{
                     credentialsId: 'kubeconfig-docker-desktop',
                     variable: 'KUBECONFIG'
                 )]) {
-                    bat 'kubectl set image deployment/deployment-tracker deployment-tracker=ryanarjoon123/deployment-tracker:%BUILD_NUMBER%'
-                    bat 'kubectl rollout status deployment/deployment-tracker'
+                    bat '''
+                        powershell -NoProfile -Command "(Get-Content k8s/deployment.yml) -replace 'image: ryanarjoon123/deployment-tracker:.*', 'image: ryanarjoon123/deployment-tracker:%BUILD_NUMBER%' | Set-Content k8s/deployment.yml"
+
+                        kubectl apply -f k8s/deployment.yml
+
+                        kubectl rollout status deployment/deployment-tracker
+                    '''
                 }
             }
         }
