@@ -51,5 +51,11 @@ pipeline{
                 }
             }
         }
+
+        stage('Smoke Tests'){
+            steps{
+                bat 'curl.exe --fail http://localhost:30080/actuator/health'
+            }
+        }
     }
 }
