@@ -40,14 +40,14 @@ pipeline{
             }
         }
 
-        stage('Test Kubernetes Access'){
+        stage('Deploy Container to Kubernetes'){
             steps{
                 withCredentials([file(
                     credentialsId: 'kubeconfig-docker-desktop',
                     variable: 'KUBECONFIG'
                 )]) {
-                    bat 'kubectl get nodes'
-                    bat 'kubectl get pods'
+                    bat 'kubectl set image deployment/deployment-tracker deployment-tracker=ryanarjoon123/deployment-tracker:%BUILD_NUMBER%'
+                    bat 'kubectl rollout status deployment/deployment-tracker'
                 }
             }
         }
