@@ -62,5 +62,31 @@ pipeline{
                 bat 'curl.exe --fail http://localhost:30080/actuator/health'
             }
         }
+
+        stage('Commit Deployment Manifest') {
+            steps {
+                withCredentials([gitUsernamePassword(
+                    credentialsId: '27f6f692-e06b-4581-b033-12df4cd1f639',
+                    gitToolName: 'Default'
+                )]) {
+                    bat '''
+                        @echo off
+
+                        git config user.name "Jenkins"
+                        git config user.email "jenkins@users.noreply.github.com"
+
+                        git add k8s/deployment.yml
+
+                        git diff --cached --quiet
+                        if errorlevel 1 (
+                            git commit -m "[skip ci] Deploy image build %BUILD_NUMBER%"
+                            git push origin HEAD:dev
+                        ) else (
+                            echo No manifest changes to commit.
+                        )
+                    '''
+                }
+            }
+        }
     }
 }
