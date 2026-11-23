@@ -82,7 +82,7 @@ pipeline{
                             git commit -m "[skip ci] Deploy image build %BUILD_NUMBER%"
                             git push origin HEAD:dev
                         ) else (
-                            echo No manifest changes to commit.
+                            echo No manifest changes to commit. 
                         )
                     '''
                 }
