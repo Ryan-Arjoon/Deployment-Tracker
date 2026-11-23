@@ -46,8 +46,13 @@ pipeline{
                     credentialsId: 'kubeconfig-docker-desktop',
                     variable: 'KUBECONFIG'
                 )]) {
-                    bat 'kubectl set image deployment/deployment-tracker deployment-tracker=ryanarjoon123/deployment-tracker:%BUILD_NUMBER%'
-                    bat 'kubectl rollout status deployment/deployment-tracker'
+                    bat '''
+                        powershell -NoProfile -Command "(Get-Content k8s/deployment.yml) -replace 'image: ryanarjoon123/deployment-tracker:.*', 'image: ryanarjoon123/deployment-tracker:%BUILD_NUMBER%' | Set-Content k8s/deployment.yml"
+
+                        kubectl apply -f k8s/deployment.yml
+
+                        kubectl rollout status deployment/deployment-tracker
+                    '''
                 }
             }
         }
@@ -55,6 +60,32 @@ pipeline{
         stage('Smoke Tests'){
             steps{
                 bat 'curl.exe --fail http://localhost:30080/actuator/health'
+            }
+        }
+
+        stage('Commit Deployment Manifest') {
+            steps {
+                withCredentials([gitUsernamePassword(
+                    credentialsId: '27f6f692-e06b-4581-b033-12df4cd1f639',
+                    gitToolName: 'Default'
+                )]) {
+                    bat '''
+                        @echo off
+
+                        git config user.name "Jenkins"
+                        git config user.email "jenkins@users.noreply.github.com"
+
+                        git add k8s/deployment.yml
+
+                        git diff --cached --quiet
+                        if errorlevel 1 (
+                            git commit -m "[skip ci] Deploy image build %BUILD_NUMBER%"
+                            git push origin HEAD:dev
+                        ) else (
+                            echo No manifest changes to commit. 
+                        )
+                    '''
+                }
             }
         }
     }
