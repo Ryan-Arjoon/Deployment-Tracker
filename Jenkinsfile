@@ -47,7 +47,7 @@ pipeline{
                     variable: 'KUBECONFIG'
                 )]) {
                     bat '''
-                        powershell -NoProfile -Command "(Get-Content k8s/dev/kustomization.yml) -replace  'newTag: .*', 'newTag: \\"%BUILD_NUMBER%\\"' | Set-Content k8s/dev/kustomization.yaml"
+                        powershell -NoProfile -Command "(Get-Content k8s/dev/kustomization.yml) -replace  'newTag: .*', 'newTag: \\"%BUILD_NUMBER%\\"' | Set-Content k8s/dev/kustomization.yml"
 
                         kubectl apply -k k8s/dev/
 
