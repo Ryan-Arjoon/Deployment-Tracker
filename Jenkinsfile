@@ -47,11 +47,11 @@ pipeline{
                     variable: 'KUBECONFIG'
                 )]) {
                     bat '''
-                        powershell -NoProfile -Command "(Get-Content k8s/deployment.yml) -replace 'image: ryanarjoon123/deployment-tracker:.*', 'image: ryanarjoon123/deployment-tracker:%BUILD_NUMBER%' | Set-Content k8s/deployment.yml"
+                        powershell -NoProfile -Command "(Get-Content k8s/dev/kustomization.yml) -replace  'newTag: .*', 'newTag: \\"%BUILD_NUMBER%\\"' | Set-Content k8s/dev/kustomization.yaml"
 
-                        kubectl apply -f k8s/deployment.yml
+                        kubectl apply -k k8s/dev/
 
-                        kubectl rollout status deployment/deployment-tracker
+                        kubectl rollout status deployment/deployment-tracker -n dev --timeout=180s
                     '''
                 }
             }
@@ -59,7 +59,7 @@ pipeline{
 
         stage('Smoke Tests'){
             steps{
-                bat 'curl.exe --fail http://localhost:30080/actuator/health'
+                bat 'curl.exe --fail http://localhost:30081/actuator/health'
             }
         }
 
@@ -75,7 +75,7 @@ pipeline{
                         git config user.name "Jenkins"
                         git config user.email "jenkins@users.noreply.github.com"
 
-                        git add k8s/deployment.yml
+                        git add k8s/dev/kustomization.yml
 
                         git diff --cached --quiet
                         if errorlevel 1 (

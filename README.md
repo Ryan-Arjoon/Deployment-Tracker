@@ -55,4 +55,10 @@ kubectl apply -f k8s/hpa.yml
 kubectl get hpa
 kubectl describe hpa <hpaName>
 kubectl get hpa --watch
+
+kubectl create namespace dev
+kubectl get namespaces
+kubectl apply -k k8s/dev
+kubectl get pods -n dev
+kubectl get deployments -n dev
 ```
