@@ -47,11 +47,25 @@ pipeline{
                     variable: 'KUBECONFIG'
                 )]) {
                     bat '''
-                        powershell -NoProfile -Command "(Get-Content k8s/dev/kustomization.yml) -replace  'newTag: .*', 'newTag: \\"%BUILD_NUMBER%\\"' | Set-Content k8s/dev/kustomization.yml"
+                        @echo off
+
+                        if exist k8s\\dev\\kustomization.yaml del /f /q k8s\\dev\\kustomization.yaml
+
+                        powershell -NoProfile -Command "$p='k8s/dev/kustomization.yml'; $tag=$env:BUILD_NUMBER; (Get-Content $p -Raw) -replace 'newTag: .*', ('newTag: ' + [char]34 + $tag + [char]34) | Set-Content $p"
+
+                        if errorlevel 1 exit /b 1
+
+                        kubectl kustomize k8s/dev/ >NUL
+
+                        if errorlevel 1 exit /b 1
 
                         kubectl apply -k k8s/dev/
 
+                        if errorlevel 1 exit /b 1
+
                         kubectl rollout status deployment/deployment-tracker -n dev --timeout=180s
+
+                        if errorlevel 1 exit /b 1
                     '''
                 }
             }
