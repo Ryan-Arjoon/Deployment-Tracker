@@ -58,4 +58,7 @@ kubectl get hpa --watch
 
 kubectl create namespace dev
 kubectl get namespaces
+kubectl apply -k k8s/dev
+kubectl get pods -n dev
+kubectl get deployments -n dev
 ```
