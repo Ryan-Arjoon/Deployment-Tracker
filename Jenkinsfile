@@ -102,5 +102,29 @@ pipeline{
                 }
             }
         }
+
+        stage('Mark Build as Production Ready'){
+            steps{
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-credentials',
+                        usernameVariable: 'DOCKERHUB_USERNAME',
+                        passwordVariable: 'DOCKERHUB_TOKEN'
+                    )
+                    ]) {
+                    bat '''
+                        @echo off
+
+                        docker login -u %DOCKERHUB_USERNAME% -p %DOCKERHUB_TOKEN%
+
+                        docker tag ryanarjoon123/deployment-tracker:%BUILD_NUMBER% ryanarjoon123/deployment-tracker:tested-%BUILD_NUMBER%
+
+                        docker push ryanarjoon123/deployment-tracker:tested-%BUILD_NUMBER%
+
+                        docker logout
+                    '''
+                }
+            }
+        }
     }
 }
