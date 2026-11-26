@@ -6,6 +6,10 @@ namespace: prod
 resources:
   - ../base
 
+images:
+  - name: ryanarjoon123/deployment-tracker
+    newTag: "48"
+
 patches:
   - target:
       version: v1
