@@ -8,7 +8,7 @@ resources:
 
 images:
   - name: ryanarjoon123/deployment-tracker
-    newTag: "53"
+    newTag: "54"
 
 patches:
   - target:
@@ -19,3 +19,4 @@ patches:
       - op: replace
         path: /spec/ports/0/nodePort
         value: 30081
+
