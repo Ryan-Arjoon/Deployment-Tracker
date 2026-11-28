@@ -28,13 +28,32 @@ public class DeploymentController{
     }
 
     @GetMapping
-    public List<Deployment> getAllDeployments(){
-        return deploymentService.getAllDeployments();
+    public List<DeploymentResponse> getAllDeployments(){
+
+        return deploymentService.getAllDeployments()
+            .stream()
+            .map(deployment -> new DeploymentResponse(
+                deployment.getId(),
+                deployment.getApplicationName(),
+                deployment.getEnviornment(),
+                deployment.getVersion(),
+                deployment.getStatus()
+            ))
+            .toList();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Deployment createDeployment(@Valid @RequestBody Deployment deployment){
+    public Deployment createDeployment(@Valid @RequestBody CreateDeploymentRequest request){
+        
+        Deployment deployment = new Deployment(
+            null,
+            request.getApplicationName(),
+            request.getEnviornment(),
+            request.getVersion(),
+            request.getStatus()
+        );
+
         return deploymentService.createDeployment(deployment);
     }
 

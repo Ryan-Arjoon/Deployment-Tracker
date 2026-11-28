@@ -61,4 +61,5 @@ kubectl get namespaces
 kubectl apply -k k8s/dev
 kubectl get pods -n dev
 kubectl get deployments -n dev
+kubectl rollout history deployment/deployment-tracker -n prod
 ```
