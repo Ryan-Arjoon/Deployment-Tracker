@@ -58,11 +58,22 @@ public class DeploymentController{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Deployment> getDeploymentById(@PathVariable Long id){
+    public ResponseEntity<DeploymentResponse> getDeploymentById(@PathVariable Long id){
         Optional<Deployment> deployment = deploymentService.getDeploymentById(id);
 
         if (deployment.isPresent()){
-            return ResponseEntity.ok(deployment.get());
+            
+            Deployment d = deployment.get();
+
+            DeploymentResponse response = new DeploymentResponse(
+                d.getId(),
+                d.getApplicationName(),
+                d.getEnviornment(),
+                d.getVersion(),
+                d.getStatus()
+            );
+
+            return ResponseEntity.ok(response);
         }
 
         return ResponseEntity.notFound().build();
